@@ -3,9 +3,9 @@
 # Author: Parker Folkman
 # Last Modified: January 31, 2016
 # ----------------------------------------------
-# 
-# 
-# 
+#
+#
+#
 # ----------------------------------------------
 
 """
@@ -24,12 +24,29 @@ RETURNS: a list of tuples that designate the top left corner placement,
 """
 
 from operator import mul
+#import functools
 
 def find_my_solution (rectangles):
     length = len(rectangles)
     placement = []
     upper_left_x = 0
     upper_left_y = 0
+
+    widths = [0]
+    height = [1]
+
+
+
+    #Fill the array with X's
+    for i in range(length): #Length
+        tempBox = rectangles[i]
+        widths.append(tempBox)
+        height.append(tempBox)
+
+
+    print(widths,height)
+
+
 
 #-------------------ID The Boxes-------------------------------------
     #ID the boxes. Stores in new list
@@ -58,8 +75,18 @@ def f(R):
 def sortByArea(rectangles):
 	return sorted(rectangles,key=f,reverse=True)
 
+
+#Function gets called
 def find_solution(rectangles):
     return find_my_solution(rectangles)  # a working example!
+
+
+
+
+
+
+
+
 
 
 
