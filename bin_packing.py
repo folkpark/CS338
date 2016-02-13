@@ -58,7 +58,7 @@ def find_my_solution (rectangles):
         temp = id(rectangles[i])
         initial_placement.append((temp,i))
 #-------------------Sort The Boxes-----------------------------------
-    
+
     #Make a new list of sorted boxes
     sorted_rectangles = sortByArea(rectangles)
 
@@ -130,16 +130,29 @@ Here is an outline of the program:
   width makes more sense.  (done)
 - Stack the Rects (while loop or called recursively)
    1. Function to update the skyline
+       Once a box is placed, the skyline needs to be updated. This is done in two steps:
+	   1. Instantiates a new line segment corresponding to the top edge of b 
+	   2. and updates existing segments effected
+
    2. Function to Find where to place
       (If Sj-1 > Sj => Leftmost
        If Sj > Sj-1 => Rightmost
        Left Endpoint
-       Right Endpoint)
+       Right Endpoint) Total of 4 possible placements
     3. Function to Place the Rect. (Return updated placement list)
        This is a list of positions of the rect and NOT the (w,l)
        The trick here is to either place it in its correct Index based
        on its Unique ID, OR to have someway to identify which box this is
        A. Note I have written a function to sort Back the list based on Unique ID (done)
+    4. Maintain a list of tuples of the placements of the Rect's in order
+- Return final_placement
+
+Other Needs:
+-Need to either pick a really reasonable fix size bin width (let height be dynamic) to start with, or
+make the bin capable of being dynamically sized
+-When the boxes are placed in the bin, the x,y position of the upper left most corner will be recorded in an list. This will be a list of tuples.
+I need a way to ID that box that was placed in the bin
+
 
 '''
 
