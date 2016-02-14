@@ -64,13 +64,9 @@ def find_my_solution (rectangles):
 
     for box in rectangles:
         width = box[0]
-        height = box[1]
-
         coordinate = (upper_left_x, upper_left_y)   # make a tuple
         placement.append(coordinate)             # insert tuple at back of list
         upper_left_x = upper_left_x + width
-
-
     return placement
 
 #This function sorts the rectangles by width. It takes
@@ -131,7 +127,7 @@ Here is an outline of the program:
 - Stack the Rects (while loop or called recursively)
    1. Function to update the skyline
        Once a box is placed, the skyline needs to be updated. This is done in two steps:
-	   1. Instantiates a new line segment corresponding to the top edge of b 
+	   1. Instantiates a new line segment corresponding to the top edge of b
 	   2. and updates existing segments effected
 
    2. Function to Find where to place
@@ -152,9 +148,10 @@ Other Needs:
 make the bin capable of being dynamically sized
 -When the boxes are placed in the bin, the x,y position of the upper left most corner will be recorded in an list. This will be a list of tuples.
 I need a way to ID that box that was placed in the bin
-
-
 '''
+
+
+
 
 
 
