@@ -7,7 +7,7 @@
 #
 #
 # ----------------------------------------------
-import bisect
+
 from operator import mul
 #import functools
 
@@ -50,6 +50,39 @@ def find_my_solution (rectangles):
               upper_left_x = upper_left_x + width
     placement = sortBack(placement)
     return placement
+#------------------------------------------------------------------------------
+
+'''
+def stackBoxes(sorted_rectangles): #count needs to be initialized to zero before being passed
+    placement = []
+    length = len(sorted_rectangles)
+    loopCount = 0 #Each loop adds a box to the bin and adds 1 to the count
+    while(loopCount<length):#while there are boxes left to be placed
+        
+        
+        while(row length < upper_left_x): #
+            #y=const. Row Stacking
+            boxWidth = box[0] #define width of the box to be placed
+            
+            index = getIndex(boxID, initial_placement)#get original index of the box
+            coordinate = (upper_left_x, upper_left_y,index) #make a tuple w/ index
+            placement.insert(index, coordinate)
+            upper_left_x = upper_left_x + boxWidth
+            loopCount = loopCount+1 #Add 1 to loop count
+        
+        while(col hight < upper_left_y): #
+            #x=const. Column Stacking
+            height = box[1]
+            
+            index = getIndex(boxID, initial_placement)
+            coordinate = (upper_left_x, upper_left_y,index) #make a tuple
+            placement.insert(index, coordinate)
+            upper_left_y = upper_left_y + height # ????
+            loopCount = loopCount+1 #Add 1 to loop count
+            
+    return placement
+'''
+
 
 def getIndex(ID, initial_placement):
     for i in range(len(initial_placement)):
@@ -95,4 +128,3 @@ def sortBack(placement):
 #Function gets called
 def find_solution(rectangles):
     return find_my_solution(rectangles)  # a working example!
-
