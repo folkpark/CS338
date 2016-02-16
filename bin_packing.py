@@ -1,13 +1,13 @@
 # ----------------------------------------------
 # CSCI 338, Spring 2016, Bin Packing Assignment
-# Author: Parker Folkman
+# Author: Parker Folkman & Kevin Ripley
 # Last Modified: January 31, 2016
 # ----------------------------------------------
 #
 #
 #
 # ----------------------------------------------
-
+import bisect
 from operator import mul
 #import functools
 
@@ -15,10 +15,11 @@ def find_my_solution (rectangles):
     length = len(rectangles)
     placement = []
     initial_placement = []
+ 
     upper_left_x = 0
     upper_left_y = 0
     left_x = 0
-    left_y = 0
+    
     temp = 0
     count = 0
     index = 0
@@ -27,62 +28,49 @@ def find_my_solution (rectangles):
     for i in range(length):
         temp = id(rectangles[i])
         initial_placement.append((temp,i))
+    sorted_height = sortByHeight(rectangles)
+    left_y = max(sorted_height[1])
+    sorted_area = sortByWidth(rectangles)
+    clone_1 = sorted_area
+    clone_2 = clone_1
+    B = clone_1[:len(clone_1)//2]
+    C = clone_1[len(clone_1)//2:]
+    #print(sorted_area)
+    temp = 0
     
-    sorted_widths = sortByWidth(rectangles)
-    
-    for box in sorted_widths:
+    for box in rectangles:
+ #     sorted_area = sortByWidth(rectangles)
       width = box[0]
       height = box[1]
       boxID = id(box)
-      original_index = getIndex(boxID, initial_placement)
+      
+      index = getIndex(boxID, initial_placement)
       coordinate = (upper_left_x, upper_left_y, index)
       placement.insert(index, coordinate)   # insert tuple at front of list
-      left_y = max(sorted_widths)[1]
-     
-      if (len(sorted_widths) <= len(sorted_widths)/2):
-          upper_left_x = upper_left_x + width
-          upper_left_y = 0
-      elif(len(sorted_widths) > len(sorted_widths)/2):
+      #print(real_widths)
+      if(count < len(B)):
+         upper_left_x = upper_left_x + width
+         upper_left_y = 0 
+##          #print("Y should equal zero!")
+         count += 1
+      elif(count == len(B)):
           upper_left_x = 0
           upper_left_y = left_y
-          count+=1
-          if(count >1):
-              upper_left_x = upper_left_x + width
+          count += 1
+      elif(count > len(B)):
+          upper_left_y = left_y
+          upper_left_x = upper_left_x + width 
+          
+         
+              
+          #print("X is zero but changing")
+          #print("X changed value")
+         # print(upper_left_x)
+          count += 1
+          temp += 1
+ #   placement.reverse()
     placement = sortBack(placement)
     return placement
-#------------------------------------------------------------------------------
-
-'''
-def stackBoxes(sorted_rectangles): #count needs to be initialized to zero before being passed
-    placement = []
-    length = len(sorted_rectangles)
-    loopCount = 0 #Each loop adds a box to the bin and adds 1 to the count
-    while(loopCount<length):#while there are boxes left to be placed
-        
-        
-        while(row length < upper_left_x): #
-            #y=const. Row Stacking
-            boxWidth = box[0] #define width of the box to be placed
-            
-            index = getIndex(boxID, initial_placement)#get original index of the box
-            coordinate = (upper_left_x, upper_left_y,index) #make a tuple w/ index
-            placement.insert(index, coordinate)
-            upper_left_x = upper_left_x + boxWidth
-            loopCount = loopCount+1 #Add 1 to loop count
-        
-        while(col hight < upper_left_y): #
-            #x=const. Column Stacking
-            height = box[1]
-            
-            index = getIndex(boxID, initial_placement)
-            coordinate = (upper_left_x, upper_left_y,index) #make a tuple
-            placement.insert(index, coordinate)
-            upper_left_y = upper_left_y + height # ????
-            loopCount = loopCount+1 #Add 1 to loop count
-            
-    return placement
-'''
-
 
 def getIndex(ID, initial_placement):
     for i in range(len(initial_placement)):
@@ -128,3 +116,5 @@ def sortBack(placement):
 #Function gets called
 def find_solution(rectangles):
     return find_my_solution(rectangles)  # a working example!
+
+
