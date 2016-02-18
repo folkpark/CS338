@@ -1,19 +1,21 @@
-# ----------------------------------------------
+ ----------------------------------------------
 # CSCI 338, Spring 2016, Bin Packing Assignment
 # Author: Parker Folkman & Kevin Ripley
 # Last Modified: January 31, 2016
 # ----------------------------------------------
-# 
-#
+# For our strategy we implemented a shelving type of algorithm with no sorting.
+#We obtain the biggest height to make the ceiling and the floor of the next level.
+#We stack all the random rectangles side by side.
 #
 # ----------------------------------------------
-import bisect
 from operator import mul
 #import functools
 
 def find_my_solution (rectangles):
     length = len(rectangles)
+    #take length of list and divide it by 8
     lengthByEight = length//8
+    #cut list into sections for shelving algorithm
     sec1 = lengthByEight
     sec2 = lengthByEight*2
     sec3 = lengthByEight*3
@@ -22,28 +24,18 @@ def find_my_solution (rectangles):
     sec6 = lengthByEight*6
     sec7 = lengthByEight*7
     sec8 = length
+    #local variables initialization
     placement = []
     initial_placement = []
- 
     upper_left_x = 0
     upper_left_y = 0
     left_x = 0
-    
-    
     count = 0
-    
-    #ID the boxes. Stores in new list
-    #Stores in format: (Unique ID, index location in list)
-    for i in range(length):
-        temp = id(rectangles[i])
-        initial_placement.append((temp,i))
-        
+    #using sorted_height to find the max height to use as boundary for shelving
     sorted_height = sortByHeight(rectangles)
     left_y = max(sorted_height[1])
-    #sorted_area = sortByWidth(rectangles)
+    #making clones of list for each section
     clone_1 = rectangles
-    clone_2 = clone_1
-    #B = clone_1[:len(clone_1)//2]
     section1 = clone_1[:sec1]
     section2 = clone_1[sec1:sec2]
     section3 = clone_1[sec2:sec3]
@@ -52,18 +44,12 @@ def find_my_solution (rectangles):
     section6 = clone_1[sec5:sec6]
     section7 = clone_1[sec6:sec7]
     section8 = clone_1[sec7:]
-    #C = clone_1[len(clone_1)//2:]
     
-    
-    for box in rectangles:
- #     sorted_area = sortByWidth(rectangles)
+    for box in rectangles: # iterate through all the rectangles list and obtain the box tuples
       width = box[0]
       height = box[1]
-      boxID = id(box)
-      
-      index = getIndex(boxID, initial_placement)
-      coordinate = (upper_left_x, upper_left_y, index)
-      placement.insert(index, coordinate)   # insert tuple at front of list
+      coordinate = (upper_left_x, upper_left_y)
+      placement.insert(0, coordinate)   # insert tuple at front of list
 
       if(count < sec1): #Stack boxes in first shelf
          upper_left_x = upper_left_x + width
@@ -125,10 +111,7 @@ def find_my_solution (rectangles):
           upper_left_y = left_y*7
           upper_left_x = upper_left_x + width  
           count += 1
-    
-          #temp += 1
- #   placement.reverse()
-    placement = sortBack(placement)
+    placement.reverse()
     return placement
 
 #------END of Find Solution---------------
@@ -147,14 +130,6 @@ def getIndex(ID, initial_placement):
             index = tempRect[1]
             return index
 
-#This function sorts the rectangles by width. It takes
-#a list of tuples, unsorted, and returns those boxes
-#sorted by width. Greatest -> smallest
-def sortByWidth(rectangles):
-    sorted_by_width = sorted(rectangles)
-    sorted_by_width.reverse()
-    return sorted_by_width
-
 #This function sorts the rectangles by height. It takes
 #a list of tuples, unsorted, and returns those boxes
 #sorted by height. Greatest -> smallest
@@ -163,23 +138,7 @@ def sortByHeight(rectangles):
     sorted_by_height.reverse()
     return sorted_by_height
 
-#These two functions sort the tuples based on area (w*h)
-def f(R):
-    return R[0]*R[1]
-def sortByArea(rectangles):
-	return sorted(rectangles,key=f,reverse=True)
-
-def sortBack(placement):
-    newPlacement = []
-    for i in range(len(placement)):
-        tempCord = placement[i]
-        tempX = tempCord[0]
-        tempY = tempCord[1]
-        newCord = (tempX,tempY)
-        tempIndex = tempCord[2]
-        newPlacement.insert(tempIndex, newCord)
-    return newPlacement
-
 #Function gets called
 def find_solution(rectangles):
-    return find_my_solution(rectangles)  # a working example!
+    return find_my_solution(rectangles)  
+
