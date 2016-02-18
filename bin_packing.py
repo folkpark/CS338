@@ -1,4 +1,4 @@
- ----------------------------------------------
+# ----------------------------------------------
 # CSCI 338, Spring 2016, Bin Packing Assignment
 # Author: Parker Folkman & Kevin Ripley
 # Last Modified: January 31, 2016
